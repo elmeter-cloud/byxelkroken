@@ -27,7 +27,7 @@ class _KrokPageState extends State<KrokPage> {
       Themed.text13(step.promptNearby),
       Expanded(child: Image.asset("assets/${step.imageNearby}")),
       Container(
-        margin: EdgeInsets.symmetric(vertical: 8),
+        margin: EdgeInsets.only(top: 8, bottom: 24),
         child:
             index < steps.length - 1
                 ? Themed.primaryButton(
@@ -62,7 +62,7 @@ class _KrokPageState extends State<KrokPage> {
         Themed.text13("${index + 1}: Gå till ${step.title}"),
         Expanded(child: Image.asset("assets/${step.imageProceedTo}")),
         Container(
-          margin: EdgeInsets.symmetric(vertical: 8),
+          margin: EdgeInsets.only(top: 8, bottom: 24),
           child: Themed.primaryButton(
             context,
             "Framme",

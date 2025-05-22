@@ -96,38 +96,32 @@ class _KrokItem extends StatelessWidget {
     final rows = <Widget>[
       Container(
         margin: EdgeInsets.symmetric(horizontal: 8),
-        child: Text(
-          title,
-          textScaler: TextScaler.linear(1.3),
-          style: TextStyle(fontWeight: FontWeight.w500),
+        child: Row(
+          children: [
+            Text(
+              "$title ",
+              textScaler: TextScaler.linear(1.3),
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            leading ?? const Icon(Icons.near_me),
+          ],
         ),
       ),
     ];
     if (null != imagePath) {
       rows.add(Image.asset("assets/$imagePath"));
     }
-    final columns = <Widget>[
-      Container(
-        width: 48,
-        alignment: Alignment.centerRight,
-        margin: EdgeInsets.symmetric(horizontal: 8),
-        child: leading ?? const Icon(Icons.near_me),
-      ),
-      SizedBox(
-        width: 300,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: rows,
-        ),
-      ),
-      IconButton(icon: Icon(Icons.arrow_forward_ios), onPressed: onPressed),
-    ];
-
     return Card(
       color: backgroundColor,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        child: Row(children: columns),
+        padding: EdgeInsets.symmetric(vertical: 8),
+        child: MaterialButton(
+          onPressed: onPressed,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: rows,
+          ),
+        ),
       ),
     );
   }
