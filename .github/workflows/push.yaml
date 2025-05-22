@@ -34,4 +34,4 @@ jobs:
           xcrun altool --upload-package build/ios/ipa/byxelkroken.ipa --type ios \
             --apple-id 6746264660 --bundle-id se.stopgap.byxelkroken \
             --bundle-version ${{github.run_number}} --bundle-short-version-string 0.0.0 \
-            -p @keychain:APPLE_CREDENTIALS
+            -p @keychain:ALTOOL_CREDENTIALS
