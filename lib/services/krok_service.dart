@@ -42,6 +42,12 @@ class KrokService {
                 imageNearby: "uppswinget.jpg",
                 imageProceedTo: "42bc8f_2.jpeg",
                 promptNearby: "Åk om du törs!",),
+              KrokStep(title: "Grattis!",
+              type: KrokType.qrVoucher,
+              imageNearby: "korvhallen.jpg",
+              promptNearby: "Du har vunnit en Halv Special i Korvhallen!",
+              qrData: "Byxelkroken",
+              ),
             ],
           )
           : Future.error(id);

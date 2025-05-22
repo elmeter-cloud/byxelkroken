@@ -1,6 +1,7 @@
 import 'package:byxelkroken/services/krok_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import 'models/krok_step.dart';
 import 'themed.dart';
@@ -22,25 +23,29 @@ class _KrokPageState extends State<KrokPage> {
 
   Widget _buildNearbyStep(BuildContext context, List<KrokStep> steps) {
     final step = steps[index];
-    return Column(
-      children: [
-        Text(step.promptNearby),
-        Expanded(child: Image.asset("assets/${step.imageNearby}")),
-        index < steps.length - 1
-            ? Themed.primaryButton(
-              context,
-              "Fortsätt",
-              onPressed:
-                  () => setState(() {
-                    index++;
-                    nearby = false;
-                  }),
-            )
-            : Themed.primaryButton(context, "Klar",
-              onPressed: () => Navigator.pop(context, steps.length),
-            ),
-      ],
-    );
+    final rows = <Widget>[
+      Text(step.promptNearby),
+      Expanded(child: Image.asset("assets/${step.imageNearby}")),
+      index < steps.length - 1
+          ? Themed.primaryButton(
+            context,
+            "Fortsätt",
+            onPressed:
+                () => setState(() {
+                  index++;
+                  nearby = false;
+                }),
+          )
+          : Themed.primaryButton(
+            context,
+            "Klar",
+            onPressed: () => Navigator.pop(context, steps.length),
+          ),
+    ];
+    if (null != step.qrData) {
+      rows.insert(2, QrImageView(data: step.qrData!, size: 128,));
+    }
+    return Column(children: rows);
   }
 
   Widget _buildProceedTo(BuildContext context, List<KrokStep> steps) {
@@ -65,14 +70,17 @@ class _KrokPageState extends State<KrokPage> {
   }
 
   Widget _buildStep(BuildContext context, List<KrokStep> steps) {
-    return nearby
+    return nearby || KrokType.qrVoucher == steps[index].type
         ? _buildNearbyStep(context, steps)
         : _buildProceedTo(context, steps);
   }
 
   @override
   Widget build(BuildContext context) {
-    krokFuture ??= Provider.of<KrokService>(context, listen: false).get(widget.id);
+    krokFuture ??= Provider.of<KrokService>(
+      context,
+      listen: false,
+    ).get(widget.id);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorScheme.of(context).inversePrimary,
@@ -85,7 +93,10 @@ class _KrokPageState extends State<KrokPage> {
       body: Center(
         child: FutureBuilder<List<KrokStep>>(
           future: krokFuture,
-          builder: (BuildContext context, AsyncSnapshot<List<KrokStep>> snapshot) {
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<List<KrokStep>> snapshot,
+          ) {
             switch (snapshot.connectionState) {
               case ConnectionState.active:
               case ConnectionState.waiting:
