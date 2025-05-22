@@ -19,7 +19,7 @@ jobs:
         run: flutter build appbundle --release --build-name ${{steps.build_name.outputs.stripped}} --build-number ${{github.run_number}}
       - uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJsonPlainText: ${{ DEPLOY_PLAY_ACCOUNT }}
+          serviceAccountJsonPlainText: ${{ secrets.DEPLOY_PLAY_ACCOUNT }}
           packageName: se.stopgap.byxelkroken
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: qa
@@ -45,3 +45,14 @@ jobs:
             --bundle-version ${{github.run_number}} --bundle-short-version-string 0.0.0 \
             -p @keychain:ALTOOL_CREDENTIALS
 
+  flutter-gh-pages:
+    runs-on: [ self-hosted, macos ]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+      - run: flutter pub get
+      - run: flutter build web --release --base-href '/byxelkroken/'
+      - uses: bluefireteam/flutter-gh-pages@v9
+        with:
+          baseHref: /byxelkroken/
