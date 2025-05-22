@@ -22,11 +22,11 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.DEPLOY_PLAY_ACCOUNT }}
           packageName: se.stopgap.byxelkroken
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
-          track: qa
+          track: internal
           mappingFile: build/app/outputs/mapping/release/mapping.txt
           debugSymbols: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib
 
-  flutter-snapshot-ios:
+  flutter-release-ios:
     runs-on: [ self-hosted, macos ]
     steps:
       - uses: actions/checkout@v3
@@ -38,8 +38,6 @@ jobs:
         run: REF_NAME=${{github.ref_name}}; VERSION_NAME=${REF_NAME##*v}; echo "::set-output name=stripped::${VERSION_NAME%.*}"
       - id: build_iOS_prod
         run: flutter build ipa --release --build-name ${{steps.build_name.outputs.stripped}} --build-number ${{github.run_number}}
-      - run: cp build/ios/ipa/byxelkroken.ipa ~/Downloads/byxelkroken-${{steps.build_name.outputs.stripped}}.${{github.run_number}}.ipa
-      - run: ls -la ~/Downloads/byxelkroken-*
       - run: |
           xcrun altool --upload-package build/ios/ipa/byxelkroken.ipa --type ios \
             --apple-id 6746264660 --bundle-id se.stopgap.byxelkroken \
