@@ -23,6 +23,7 @@ jobs:
           packageName: se.stopgap.byxelkroken
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: internal
+          status: draft
           mappingFile: build/app/outputs/mapping/release/mapping.txt
           debugSymbols: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib
 
