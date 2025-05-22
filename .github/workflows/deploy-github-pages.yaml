@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
       - run: flutter pub get
-      - run: flutter build web --release --base-href '/urban-rotary-phone/'
+      - run: flutter build web --release --base-href '/byxelkroken/'
       - uses: bluefireteam/flutter-gh-pages@v9
         with:
-          baseHref: /andreanielsen83.github.io/urban-rotary-phone/
+          baseHref: /byxelkroken/
