@@ -15,23 +15,4 @@ jobs:
       - run: flutter pub get
       - id: build_Android_prod
         run: flutter build appbundle --release --build-name 0.0.0 --build-number ${{github.run_number}}
-      - run: cp build/app/outputs/bundle/release/app-release.aab ~/Downloads/byxelkroken-0.0.0.${{github.run_number}}.aab
-      - run: ls -la ~/Downloads/byxelkroken-*
-
-  flutter-snapshot-ios:
-    runs-on: [ self-hosted, macos ]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-      - run: flutter pub get
-      - id: build_iOS_prod
-        run: flutter build ipa --release --build-name 0.0.0 --build-number ${{github.run_number}}
-      - run: cp build/ios/ipa/byxelkroken.ipa ~/Downloads/byxelkroken-0.0.0.${{github.run_number}}.ipa
-      - run: ls -la ~/Downloads/byxelkroken-*
-      - run: |
-          xcrun altool --upload-package build/ios/ipa/byxelkroken.ipa --type ios \
-            --apple-id 6746264660 --bundle-id se.stopgap.byxelkroken \
-            --bundle-version ${{github.run_number}} --bundle-short-version-string 0.0.0 \
-            -p @keychain:ALTOOL_CREDENTIALS
+      - run: ls -la build/app/outputs/bundle/release/app-release.aab
