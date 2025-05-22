@@ -11,9 +11,13 @@ class Themed {
         ColorScheme.of(context).inverseSurface,
       ),
       foregroundColor: WidgetStatePropertyAll(
-        ColorScheme.of(context).onInverseSurface,),
+        ColorScheme.of(context).onInverseSurface,
+      ),
     ),
     onPressed: onPressed,
     child: Text(text),
   );
+
+  static Widget text13(String text) =>
+      Text(text, textScaler: TextScaler.linear(1.3));
 }

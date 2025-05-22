@@ -24,46 +24,53 @@ class _KrokPageState extends State<KrokPage> {
   Widget _buildNearbyStep(BuildContext context, List<KrokStep> steps) {
     final step = steps[index];
     final rows = <Widget>[
-      Text(step.promptNearby),
+      Themed.text13(step.promptNearby),
       Expanded(child: Image.asset("assets/${step.imageNearby}")),
-      index < steps.length - 1
-          ? Themed.primaryButton(
-            context,
-            "Fortsätt",
-            onPressed:
-                () => setState(() {
-                  index++;
-                  nearby = false;
-                }),
-          )
-          : Themed.primaryButton(
-            context,
-            "Klar",
-            onPressed: () => Navigator.pop(context, steps.length),
-          ),
+      Container(
+        margin: EdgeInsets.symmetric(vertical: 8),
+        child:
+            index < steps.length - 1
+                ? Themed.primaryButton(
+                  context,
+                  "Fortsätt",
+                  onPressed:
+                      () => setState(() {
+                        index++;
+                        nearby = false;
+                      }),
+                )
+                : Themed.primaryButton(
+                  context,
+                  "Klar",
+                  onPressed: () => Navigator.pop(context, steps.length),
+                ),
+      ),
     ];
     if (null != step.qrData) {
-      rows.insert(2, QrImageView(data: step.qrData!, size: 128,));
+      rows.insert(2, QrImageView(data: step.qrData!, size: 128));
     }
-    return Column(children: rows);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: rows,
+    );
   }
 
   Widget _buildProceedTo(BuildContext context, List<KrokStep> steps) {
     final step = steps[index];
     return Column(
       children: [
-        Text(
-          "${index + 1}: Gå till ${step.title}",
-          textScaler: TextScaler.linear(1.3),
-        ),
+        Themed.text13("${index + 1}: Gå till ${step.title}"),
         Expanded(child: Image.asset("assets/${step.imageProceedTo}")),
-        Themed.primaryButton(
-          context,
-          "Framme",
-          onPressed:
-              () => setState(() {
-                nearby = true;
-              }),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 8),
+          child: Themed.primaryButton(
+            context,
+            "Framme",
+            onPressed:
+                () => setState(() {
+                  nearby = true;
+                }),
+          ),
         ),
       ],
     );
