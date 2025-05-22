@@ -14,7 +14,7 @@ jobs:
       - run: cp ~/Downloads/currently_flutter.android.key.properties ./android/key.properties
       - run: flutter pub get
       - id: build_Android_prod
-        run: flutter build appbundle --release --no-tree-shake-icons --build-name 0.0.0 --build-number ${{github.run_number}}
+        run: flutter build appbundle --release --build-name 0.0.0 --build-number ${{github.run_number}}
       - run: cp build/app/outputs/bundle/release/app-release.aab ~/Downloads/byxelkroken-0.0.0.${{github.run_number}}.aab
       - run: ls -la ~/Downloads/byxelkroken-*
 
@@ -27,6 +27,7 @@ jobs:
           channel: 'stable'
       - run: flutter pub get
       - id: build_iOS_prod
-        run: flutter build ipa --release --no-tree-shake-icons --build-name 0.0.0 --build-number ${{github.run_number}}
-      - run: cp build/ios/ipa/currently_flutter.ipa ~/Downloads/byxelkroken-0.0.0.${{github.run_number}}.ipa
+        run: flutter build ipa --release --build-name 0.0.0 --build-number ${{github.run_number}}
+      - run: cp build/ios/ipa/byxelkroken.ipa ~/Downloads/byxelkroken-0.0.0.${{github.run_number}}.ipa
       - run: ls -la ~/Downloads/byxelkroken-*
+      - run: xcrun altool --upload-package build/ios/ipa/byxelkroken.ipa --type ios -p @keychain:APPLE_CREDENTIALS
