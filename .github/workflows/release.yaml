@@ -23,7 +23,6 @@ jobs:
           packageName: se.stopgap.byxelkroken
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: qa
-          status: inProgress
           mappingFile: app/build/outputs/mapping/release/mapping.txt
           debugSymbols: app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib
 
